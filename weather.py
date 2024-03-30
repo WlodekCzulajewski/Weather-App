@@ -21,13 +21,13 @@ class MeteoWeather:
         # Create soup object.
         self.soup = BeautifulSoup(meteo_web_page, "html.parser")
 
-    def get_current_temp(self):
+    def get_current_weather(self):
         """Returns Meteos current temperature."""
         weather = {
             "temperature": float(self.soup.select_one("div.left:nth-child(3) > div:nth-child(1)").getText().split()[1].replace(",", ".")),
-            "feels_like": float(self.soup.select_one("table.tab_msrs1:nth-child(5) > tbody:nth-child(1) > tr:nth-child(2) > th:nth-child(2) > strong:nth-child(1)").getText().replace(",", ".")),
+            "feels_like": float(self.soup.select_one("table.tab_msrs1:nth-child(5)").getText().split()[5].replace(",", ".").replace("odczuwalna", "")),
             "humidity": int(float(self.soup.select_one("div.left:nth-child(4) > div:nth-child(1)").getText().split()[1].replace(",", "."))),
-            "dew_point": float(self.soup.select_one("table.tab_msrs1:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > th:nth-child(2) > strong:nth-child(1)").getText().split()[1].replace(",", ".")),
+            "dew_point": float(self.soup.select_one("table.tab_msrs1:nth-child(5)").getText().split()[2].replace(",", ".").replace("rosy", "")),
             "wind_speed": float(self.soup.select_one("div.plotbox:nth-child(1) > div:nth-child(1)").getText().split()[1].replace(",", ".")),
             "wind_direction": int(float(self.soup.select_one("div.left:nth-child(2) > div:nth-child(1)").getText().split()[1].replace(",", ".")))
         }
@@ -58,9 +58,9 @@ class OWMWeather:
         """Returns OWMs current weather."""
         weather = {
             "temperature": round(float(self.weather_data["temp"]), 1),
-            "feels_like": float(self.weather_data["feels_like"]),
+            "feels_like": round(float(self.weather_data["feels_like"]), 1),
             "humidity": int(self.weather_data["humidity"]),
-            "dew_point": float(self.weather_data["dew_point"]),
+            "dew_point": round(float(self.weather_data["dew_point"]), 1),
             "wind_speed": round(float(self.weather_data["wind_speed"]), 1),
             "wind_direction": int(self.weather_data["wind_deg"])
         }
