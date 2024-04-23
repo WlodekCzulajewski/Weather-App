@@ -1,13 +1,17 @@
-from weather import Meteo, OWM
-from db import DB_Manager
+from weather import METEO, OWM
+from db import DBMANAGER
 
-meteo = Meteo()
-weather = meteo.get_current_weather()
-owm = OWM()
-owm_cw = owm.get_current_weather()
-db = DB_Manager()
+if __name__ == "__main__":
+    meteo = METEO()
+    weather = meteo.get_current_weather()
+    owm = OWM()
+    owm_cw = owm.get_current_weather()
+    forecast = owm.get_forecast()
+    for i in owm_cw:
+        weather.append(i)
+    weather.append(forecast)
 
-for i in owm_cw:
-    weather.append(i)
-
-db.save_measurements(val=tuple(weather))
+    db = DBMANAGER()
+    db.save_measurements(val=tuple(weather))
+    # column = input("Write column name: ")
+    # db.get_records(column)
