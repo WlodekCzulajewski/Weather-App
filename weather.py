@@ -69,5 +69,15 @@ class OWM:
 
     def get_forecast(self):
         """Returns OWMs forecast."""
-        forecast = self.data["hourly"]
+        forecast = []
+        for hour in self.data["hourly"]:
+            forecast_for_an_hour = {
+                "temperature": round(float(hour["temp"]), 1),
+                "feels_like": round(float(hour["feels_like"]), 1),
+                "humidity": int(hour["humidity"]),
+                "dew_point": round(float(hour["dew_point"]), 1),
+                "wind_speed": round(float(hour["wind_speed"]), 1),
+                "wind_direction": int(hour["wind_deg"])
+            }
+            forecast.append(forecast_for_an_hour)
         return str(forecast).replace("'", "\"")
