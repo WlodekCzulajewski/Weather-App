@@ -1,6 +1,7 @@
 from weather import METEO, OWM
 from db import DBMANAGER
 
+
 if __name__ == "__main__":
     meteo = METEO()
     weather = meteo.get_current_weather()
@@ -13,5 +14,3 @@ if __name__ == "__main__":
 
     db = DBMANAGER()
     db.save_measurements(val=tuple(weather))
-    # column = input("Write column name: ")
-    # db.get_records(column)

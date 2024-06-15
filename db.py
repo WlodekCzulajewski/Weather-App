@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector.errors import DatabaseError
 from mysql.connector.plugins import mysql_native_password
+import datetime
 
 FOREIGN_HOST = "148.81.137.221"
 EDUROM_HOST = "10.44.117.230"
@@ -39,11 +40,16 @@ class DBMANAGER:
         self.mydb.commit()
         print(self.mycursor.rowcount, "record inserted.")
 
-    def get_records(self, column):
-        """Fetches records from database"""
-        self.mycursor.execute(f"SELECT meteo_{column}, owm_{column} FROM weather order by time desc limit 96")
+    def get_last_record(self):
+        """Fetches last record from database"""
+        self.mycursor.execute(f"SELECT * FROM weather order by time desc limit 1")
+        result = self.mycursor.fetchall()[0]
+
+        return result
+
+    def get_last_48h(self):
+        """Fetches last 48h records from database"""
+        self.mycursor.execute(f"SELECT * FROM weather order by time desc limit 48")
         result = self.mycursor.fetchall()
 
-        # Check
-        for x in result:
-            print(x)
+        return result
