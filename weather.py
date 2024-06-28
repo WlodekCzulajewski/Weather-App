@@ -1,10 +1,10 @@
 from bs4 import BeautifulSoup
 import requests
-
+import os
 
 METEO_ENDPOINT = "https://sggw.meteo.waw.pl/"
 OWM_ENDPOINT = "https://api.openweathermap.org/data/2.8/onecall"
-API_KEY = "be6b819e6631efa5f3b04ec84da3d06a"
+API_KEY = os.environ.get("OWM_API_KEY")
 COORDINATES = (52.160382, 21.053312)
 
 
